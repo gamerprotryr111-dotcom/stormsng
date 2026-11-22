@@ -86,7 +86,30 @@ nav button.on,button.pri{background:linear-gradient(180deg,#f0505c,#c1121f);bord
 .lg button{background:none;border:0;color:var(--m);padding:5px 11px;font:600 12px Onest,sans-serif;cursor:pointer}
 .lg button.on{background:linear-gradient(180deg,#f0505c,#c1121f);color:#fff}
 @media(min-width:700px){.lg{top:32px;right:max(calc(min(8.5vw,118px) + 12px),calc((100vw - 1100px)/2 + 16px))}}
+
+/* ===== New Dawn ===== */
+.card,.bm{backdrop-filter:blur(14px) saturate(170%);-webkit-backdrop-filter:blur(14px) saturate(170%);background:rgba(18,23,34,.66)}
+.md>div{backdrop-filter:blur(16px) saturate(170%);-webkit-backdrop-filter:blur(16px) saturate(170%);background:rgba(18,23,34,.84)}
+button,nav button,.card.pc{transition:transform .12s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,border-color .2s,background .2s}
+button:active,.card.pc:active{transform:scale(.95)}
+.sk{height:78px;border-radius:14px;margin-bottom:8px;background:linear-gradient(100deg,var(--p) 30%,var(--p2) 50%,var(--p) 70%);background-size:300% 100%;animation:skm 1.2s linear infinite}
+@keyframes skm{to{background-position:-300% 0}}
+.ndw{position:fixed;left:10px;bottom:10px;z-index:5;display:flex;gap:6px}
+.ndw button{width:42px;height:42px;border-radius:50%;border:1px solid var(--bd);background:#0a0d14cc;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--t);font-size:18px;cursor:pointer;padding:0}
+.ndm{position:fixed;inset:0;z-index:55;background:#000b;display:grid;place-items:center;padding:14px}
+.ndb{background:rgba(18,23,34,.94);border:1px solid #e63946;border-radius:16px;padding:16px;width:100%;max-width:520px;max-height:90vh;overflow:auto;box-shadow:0 0 40px #e6394666}
+.ndh{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ndh button,.ndt button,.ndt .bt,.ndi button{background:var(--p2);border:1px solid var(--bd);color:var(--t);padding:6px 12px;border-radius:10px;font:inherit;cursor:pointer;text-decoration:none}
+.ndt{display:flex;gap:6px;margin-bottom:12px}.ndt .on,.ndi .on{background:linear-gradient(180deg,#f0505c,#c1121f);border-color:#e63946}
+.ndg{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
+.ndg button{aspect-ratio:1;border-radius:12px;border:1px solid var(--bd);background:var(--p2);color:var(--t);font-size:20px;cursor:pointer;display:grid;place-items:center;padding:0;position:relative}
+.ndg small{position:absolute;top:3px;left:6px;font-size:10px;color:var(--m)}.ndg button:disabled{opacity:.5;cursor:default}.ndg .o{border-color:var(--ok);opacity:1}
+.ndg .now{border-color:var(--g);animation:ndp 1.4s ease-in-out infinite}@keyframes ndp{50%{box-shadow:0 0 18px 4px #ffd23fcc}}
+.ndi{display:flex;flex-wrap:wrap;gap:6px}.ndb h4{margin:14px 0 8px;font-family:"Russo One",Onest,Arial}
+.ndq>div{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
+@media(prefers-reduced-motion:reduce){.sk,.ndg .now{animation:none}button{transition:none}}
 </style>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0d14"><link rel="apple-touch-icon" href="icon-192.png">
 </head><body>
 <header><h1>Storm <b>СНГ</b></h1><p>Рейтинг, вызовы и турниры игроков Naruto Ultimate Storm</p><div id="au"></div></header>
 <nav id="nv"></nav><main id="app"><p class="mu">Загрузка...</p></main>
@@ -311,7 +334,7 @@ document.addEventListener('change',async e=>{const t=e.target.closest&&e.target.
 sb.auth.onAuthStateChange(()=>{if(!ui.auth)setTimeout(load,0)});
 document.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.closest&&e.target.closest('.auth')){const b=document.querySelector('.auth [data-a=si],.auth [data-a=su]');if(b)b.click()}});
 load();setInterval(()=>{if(!ui.open&&!ui.auth&&!document.querySelector('input:focus,textarea:focus,select:focus'))load()},30000);
-</script><div style="position:fixed;right:8px;bottom:4px;font-size:10px;opacity:.5;pointer-events:none">v7</div><script>
+</script><div style="position:fixed;right:8px;bottom:4px;font-size:10px;opacity:.5;pointer-events:none">v8</div><script>
 (function(){
 const R=Math.random,RM=matchMedia('(prefers-reduced-motion: reduce)').matches,B=document.body;
 const mul=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
@@ -651,6 +674,101 @@ else if(n.nodeType===1&&!SK.has(n.nodeName)){attrs(n);for(let c=n.firstChild;c;c
 walk(document.documentElement);document.title=tr(document.title);
 new MutationObserver(ms=>{for(const m of ms){if(m.type==='childList')m.addedNodes.forEach(walk);else if(m.type==='characterData')walk(m.target);else attrs(m.target)}}).observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:AT});
 for(const f of['alert','confirm','prompt']){const o=window[f].bind(window);window[f]=(m,...a)=>o(tr(String(m)),...a)}
+})();
+</script>
+<script>
+/* ===== New Dawn: звук, конфетти, салют в полночь, адвент, квесты, итоги года, PWA ===== */
+(function(){
+const LG=window.LANG||'ru',t=(r,e)=>LG=='ru'?r:e,B=document.body,RM=matchMedia('(prefers-reduced-motion: reduce)').matches,FORCE=/[?&]nd=1/.test(location.search);
+const ls={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const J=(k,d)=>{try{return JSON.parse(ls.g(k))||d}catch(e){return d}},say=(m,ms)=>{if(typeof toast=='function')toast(m,ms)},vib=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+/* --- звук (синтез, без файлов); по умолчанию выключен --- */
+let ac,mute=ls.g('nd_mute')!=='0';
+function tone(f,d,ty,v,at,sl){if(mute)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t0=ac.currentTime+(at||0);o.type=ty||'sine';o.frequency.setValueAtTime(f,t0);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t0+d);g.gain.setValueAtTime(v||.06,t0);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g);g.connect(ac.destination);o.start(t0);o.stop(t0+d+.02)}catch(e){}}
+const SND={click:()=>tone(660,.06,'triangle',.04,0,440),whoosh:()=>tone(300,.18,'sawtooth',.025,0,900),pop:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.25,'triangle',.06,i*.08)),chime:()=>{tone(1319,.5,'sine',.05);tone(1760,.6,'sine',.04,.12)},boom:()=>tone(90,.5,'sawtooth',.06,0,30)};
+document.addEventListener('click',e=>{const a=e.target.closest('button,[data-a]');if(a)(a.dataset&&a.dataset.a=='tab')?SND.whoosh():SND.click()},true);
+/* --- конфетти и салют на одном канвасе --- */
+const cc=document.createElement('canvas');cc.setAttribute('aria-hidden','true');cc.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none';B.appendChild(cc);
+const cx=cc.getContext('2d'),COL=['#ff4d5a','#ffd23f','#4ade80','#5ab8ff','#ff8ae2','#fff'];let cp=[],craf=0,cl=0;
+const fit=()=>{const d=Math.min(devicePixelRatio||1,2);cc.width=innerWidth*d;cc.height=innerHeight*d;cx.setTransform(d,0,0,d,0,0)};fit();addEventListener('resize',fit);
+const go=()=>{if(!craf){cl=performance.now();craf=requestAnimationFrame(cf)}};
+function confetti(n,x,y){if(RM)return;x=x==null?innerWidth/2:x;y=y==null?innerHeight*.35:y;for(let i=0;i<n;i++){const a=-Math.PI/2+(Math.random()-.5)*2.2,v=300+Math.random()*500;cp.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,w:5+Math.random()*6,h:3+Math.random()*4,r:Math.random()*6,vr:(Math.random()-.5)*14,c:COL[Math.random()*6|0],l:1})}go()}
+function burst(x,y){const h=Math.random()*360,n=70;for(let i=0;i<n;i++){const a=i/n*6.283,v=120+Math.random()*180;cp.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,w:2.6,s:1,c:`hsl(${h+Math.random()*50},100%,65%)`,l:1})}go()}
+function cf(t){const dt=Math.min(.05,(t-cl)/1000||0);cl=t;cx.clearRect(0,0,innerWidth,innerHeight);
+for(const p of cp){if(p.s){p.vx*=1-1.2*dt;p.vy=p.vy*(1-1.2*dt)+90*dt;p.l-=dt*.7}else{p.vy+=620*dt;p.vx*=1-1.4*dt;p.vy*=1-.6*dt;p.r+=p.vr*dt;p.l-=dt*.38}
+p.x+=p.vx*dt;p.y+=p.vy*dt;cx.globalAlpha=Math.max(0,Math.min(1,p.l*2));cx.fillStyle=p.c;
+if(p.s){cx.beginPath();cx.arc(p.x,p.y,p.w*Math.max(.3,p.l),0,6.283);cx.fill()}else{cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()}}
+cx.globalAlpha=1;cp=cp.filter(p=>p.l>0&&p.y<innerHeight+30);if(cp.length)craf=requestAnimationFrame(cf);else{craf=0;cx.clearRect(0,0,innerWidth,innerHeight)}}
+document.addEventListener('visibilitychange',()=>{if(document.hidden){cp=[];}});
+function show(sec){if(RM)return;let n=0;const id=setInterval(()=>{burst(innerWidth*(.1+Math.random()*.8),innerHeight*(.1+Math.random()*.45));SND.boom();vib(18);if(++n>=sec*2.2)clearInterval(id)},450)}
+/* --- салют ровно в полночь 1 января (по локальному времени) --- */
+const nw=new Date(),NY=new Date(nw.getFullYear()+(nw.getMonth()==11?1:0),0,1).getTime();
+const fireNY=()=>{if(ls.g('nd_ny')==String(NY))return;ls.s('nd_ny',String(NY));say('🎆 '+t('С Новым годом!','Happy New Year!'),6000);SND.chime();confetti(200);show(25)};
+const dl=NY-Date.now();if(dl>0&&dl<864e5)setTimeout(fireNY,dl);else if(dl<=0&&-dl<36e5)fireNY();
+/* --- победа / новый тир: конфетти, звук, вибрация --- */
+const TO={'S+':0,S:1,A:2,B:3,N:4};
+function check(){const me=S.me;if(!me||!S.matches.length)return;const k='nd_w'+me.id,seen=J(k,null),won=S.matches.filter(m=>m.s=='d'&&((m.a==me.id&&m.sa>m.sb)||(m.b==me.id&&m.sb>m.sa))).map(m=>m.id),sv=()=>ls.s(k,JSON.stringify({w:won,t:me.tier}));
+if(!seen){sv();return}const up=TO[me.tier]<TO[seen.t];
+if(won.some(i=>!seen.w.includes(i))||up){confetti(up?220:150);SND.pop();vib([30,40,30]);say(up?'⬆ '+t('Новый тир: ','New tier: ')+me.tier:'🏆 '+t('Победа!','Victory!'))}sv()}
+/* --- адвент-календарь и квесты (хранятся в браузере) --- */
+const PAL=[['Алая','Scarlet','#ff4d5a'],['Золотая','Gold','#ffd23f'],['Изумрудная','Emerald','#4ade80'],['Ледяная','Ice','#5ab8ff'],['Розовая','Pink','#ff8ae2']],TT=[['Санта','Santa'],['Снеговик','Snowman'],['Дед Мороз','Father Frost'],['Снегурочка','Snow Maiden'],['Эльф','Elf'],['Зимний саннин','Winter Sannin']];
+const RW=d=>d==31?{k:'t',i:'👑',n:t('Новогодний чемпион','New Year Champion')}:d>24?{k:'t',i:'🎖',n:t(TT[d-25][0],TT[d-25][1])}:d%3==0?{k:'f',i:'🖼',c:PAL[(d/3)%5][2],n:t(PAL[(d/3)%5][0]+' рамка',PAL[(d/3)%5][1]+' frame')}:{k:'s',i:'❄',n:'+'+(10+d)};
+const st=()=>{const s=J('nd_adv',null),y=new Date().getFullYear();return s&&s.y==y?s:{y,o:[],f:0,q:{}}},sv=s=>ls.s('nd_adv',JSON.stringify(s));
+const td=()=>{const n=new Date();return n.getMonth()==11?n.getDate():FORCE?1:0};
+const qs=()=>{const me=S.me,k=new Date().toDateString(),mm=me?S.matches.filter(m=>m.s=='d'&&(m.a==me.id||m.b==me.id)&&new Date(m.t).toDateString()==k):[],w=me?mm.filter(m=>m.a==me.id?m.sa>m.sb:m.sb>m.sa).length:0;
+return[{id:'l',n:t('Залогинься','Log in'),p:S.user?1:0,g:1,r:5},{id:'p1',n:t('Сыграй бой','Play a match'),p:mm.length,g:1,r:10},{id:'w1',n:t('Выиграй бой','Win a match'),p:w,g:1,r:15},{id:'p3',n:t('Сыграй 3 боя','Play 3 matches'),p:mm.length,g:3,r:25}]};
+function claim(){const s=st(),k=new Date().toDateString();if(!s.q||s.q.k!=k)s.q={k,d:[]};let ch=0;qs().forEach(q=>{if(q.p>=q.g&&!s.q.d.includes(q.id)){s.q.d.push(q.id);s.f+=q.r;ch=1;say('✅ '+q.n+'  ❄ +'+q.r)}});if(ch){sv(s);SND.chime();confetti(60)}}
+/* --- оверлеи: календарь/квесты и итоги года --- */
+const o=document.createElement('div');o.id='ndo';B.appendChild(o);let hub=0,tab='c',rv=null,rvb=null;
+function hubHTML(){const s=st(),d0=td(),eq=J('nd_eq',{});let h=`<div class="ndm" data-nd="x"><div class="ndb"><div class="ndh"><b>🎁 New Dawn</b><span>❄ ${s.f}</span><button data-nd="x" aria-label="Close">✕</button></div><div class="ndt"><button data-nd="tc" class="${tab=='c'?'on':''}">${t('Календарь','Advent')}</button><button data-nd="tq" class="${tab=='q'?'on':''}">${t('Квесты','Quests')}</button></div>`;
+if(tab=='c'){h+=d0?'':`<p class="mu">${t('Календарь откроется 1 декабря','The calendar opens on December 1')}</p>`;
+h+='<div class="ndg">'+Array.from({length:31},(_,i)=>{const d=i+1,op=s.o.includes(d),r=RW(d),can=d==d0&&!op;return`<button data-nd="o${d}" class="${op?'o':''}${can?' now':''}" ${can?'':'disabled'} title="${op?r.n:''}"><small>${d}</small>${op?r.i:d>d0?'🔒':can?'🎁':'·'}</button>`}).join('')+'</div>';
+const inv=s.o.filter(d=>RW(d).k!='s');if(inv.length)h+=`<h4>${t('Коллекция','Collection')}</h4><div class="ndi">`+inv.map(d=>{const r=RW(d),on=(r.k=='f'?eq.f:eq.t)==d;return`<button data-nd="e${d}" class="${on?'on':''}">${r.i} ${r.n}${on?' ✓':''}</button>`}).join('')+'</div>';
+h+=`<p class="mu" style="font-size:12px;margin:10px 0 0">${t('Награды видны только тебе в этом браузере','Rewards are visible only to you in this browser')}</p>`}
+else{const k=new Date().toDateString(),dn=s.q&&s.q.k==k?s.q.d:[];h+='<div class="ndq">'+qs().map(q=>`<div><span>${dn.includes(q.id)?'✅':'⬜'} ${q.n}</span><span class="mu">${Math.min(q.p,q.g)}/${q.g} · ❄ ${q.r}</span></div>`).join('')+'</div>'}
+return h+'</div></div>'}
+function rvHTML(){return`<div class="ndm" data-nd="x"><div class="ndb"><div class="ndh"><b>📅 ${t('Итоги года','Year in review')}</b><button data-nd="x" aria-label="Close">✕</button></div><img src="${rv}" alt="" style="width:100%;border-radius:12px"><div class="ndt" style="margin:12px 0 0"><a class="bt on" href="${rv}" download="storm-year.png">${t('Скачать','Download')}</a>${navigator.canShare?`<button data-nd="sh" class="on">${t('Поделиться','Share')}</button>`:''}</div></div></div>`}
+const draw=()=>{o.innerHTML=rv?rvHTML():hub?hubHTML():''};
+function openDay(d){const s=st();if(d!=td()||s.o.includes(d))return;s.o.push(d);const r=RW(d);if(r.k=='s')s.f+=10+d;sv(s);confetti(120);SND.chime();vib(30);say(r.i+' '+r.n);draw()}
+function equip(d){const eq=J('nd_eq',{}),k=RW(d).k;if(eq[k]==d)delete eq[k];else eq[k]=d;ls.s('nd_eq',JSON.stringify(eq));draw();post()}
+async function review(){const me=S.me;if(!me)return;const n=new Date(),Y=n.getMonth()==0?n.getFullYear()-1:n.getFullYear();
+const ms=S.matches.filter(m=>m.s=='d'&&(m.a==me.id||m.b==me.id)&&new Date(m.t).getFullYear()==Y).sort((a,b)=>a.t-b.t);if(!ms.length)return say(t('Нет боёв за '+Y,'No matches in '+Y));
+let w=0,run=0,best=0;const ch={},op={};ms.forEach(m=>{const A=m.a==me.id,win=A?m.sa>m.sb:m.sb>m.sa,c=((A?m.ca:m.cb)||'').trim(),q=A?m.b:m.a;if(win){w++;run++;best=Math.max(best,run)}else run=0;if(c)ch[c]=(ch[c]||0)+1;op[q]=(op[q]||0)+1});
+const top=x=>Object.entries(x).sort((a,b)=>b[1]-a[1])[0],fc=top(ch),fo=top(op);
+try{await document.fonts.load('40px "Russo One"');await document.fonts.load('40px Onest')}catch(e){}
+const c=document.createElement('canvas');c.width=1080;c.height=1350;const X=c.getContext('2d'),tx=(s,x,y,z,col,al,f)=>{X.font=`${z}px ${f||'Onest'}, sans-serif`;X.fillStyle=col;X.textAlign=al||'center';X.fillText(s,x,y)},RU='"Russo One"';
+const g=X.createLinearGradient(0,0,0,1350);g.addColorStop(0,'#3a0d16');g.addColorStop(1,'#0a0d14');X.fillStyle=g;X.fillRect(0,0,1080,1350);
+X.fillStyle='#fff';for(let i=0;i<90;i++){X.globalAlpha=.15+Math.random()*.5;X.beginPath();X.arc(Math.random()*1080,Math.random()*1350,1+Math.random()*3,0,6.3);X.fill()}X.globalAlpha=1;
+tx('STORM СНГ',540,110,46,'#ff4d5a','center',RU);tx(t('ИТОГИ ','YEAR IN REVIEW ')+Y,540,168,34,'#ffd23f','center',RU);
+const im=await new Promise(r=>{if(!me.avatar)return r(null);const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=me.avatar});
+X.save();X.beginPath();X.arc(540,320,110,0,6.283);X.clip();if(im)X.drawImage(im,430,210,220,220);else{X.fillStyle='#c1121f';X.fillRect(430,210,220,220);tx(me.nick[0].toUpperCase(),540,345,100,'#fff','center',RU)}X.restore();
+X.lineWidth=6;X.strokeStyle='#ffd23f';X.beginPath();X.arc(540,320,113,0,6.283);X.stroke();
+tx(me.nick,540,498,64,'#fff','center',RU);tx(t('Тир ','Tier ')+me.tier+' · '+t('рейтинг ','rating ')+me.elo,540,548,30,'#9ba7c0');
+[[ms.length,t('боёв','matches')],[w,t('побед','wins')],[Math.round(100*w/ms.length)+'%',t('% побед','win rate')],[best,t('лучшая серия','best streak')]].forEach(([v,l],i)=>{const x=60+(i%2)*500,y=600+(i>>1)*200;X.fillStyle='rgba(255,255,255,.08)';X.beginPath();X.roundRect?X.roundRect(x,y,460,170,24):X.rect(x,y,460,170);X.fill();tx(String(v),x+230,y+95,76,'#ffb066','center',RU);tx(l,x+230,y+143,28,'#9ba7c0')});
+if(fc)tx(t('Главный: ','Main: ')+fc[0]+' ('+fc[1]+')',540,1060,36,'#fff');if(fo)tx(t('Частый соперник: ','Top rival: ')+P(fo[0]).nick+' ('+fo[1]+')',540,1120,36,'#fff');
+tx('🎄 '+t('С Новым годом!','Happy New Year!'),540,1270,48,'#ffd23f','center',RU);
+c.toBlob(b=>{if(!b)return;rvb=b;rv=URL.createObjectURL(b);draw()},'image/png')}
+/* --- кнопки в углу --- */
+const W=document.createElement('div');W.className='ndw';W.innerHTML='<button data-nd="snd" id="ndS"></button><button data-nd="hub" aria-label="New Dawn">🎁</button><button data-nd="rev" id="ndR" hidden aria-label="Year in review">📅</button><button data-nd="fw" id="ndF" hidden aria-label="Fireworks">🎆</button>';B.appendChild(W);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-nd]');if(!b)return;const a=b.dataset.nd;
+if(a=='x'){if(e.target.closest('.ndb')&&!e.target.closest('button,a'))return;hub=0;if(rv){URL.revokeObjectURL(rv);rv=null}return draw()}
+if(a=='tc'||a=='tq'){tab=a[1];return draw()}if(a=='snd'){mute=!mute;ls.s('nd_mute',mute?'1':'0');SND.click();return post()}
+if(a=='hub'){hub=1;tab='c';return draw()}if(a=='rev')return review();if(a=='fw'){confetti(120);return show(20)}
+if(a=='sh'&&rvb){const f=new File([rvb],'storm-year.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:'Storm СНГ'}).catch(()=>{});return}
+if(a[0]=='o')openDay(+a.slice(1));else if(a[0]=='e')equip(+a.slice(1))});
+addEventListener('keydown',e=>{if(e.key=='Escape'&&(hub||rv)){hub=0;rv=null;draw()}});
+let auto=0;
+function post(){check();claim();
+document.getElementById('ndS').textContent=mute?'🔇':'🔊';document.getElementById('ndR').hidden=!(S.me&&(FORCE||[11,0].includes(new Date().getMonth())));document.getElementById('ndF').hidden=!(S.admin||FORCE);
+const eq=J('nd_eq',{}),s=st(),fr=eq.f&&s.o.includes(eq.f)?RW(eq.f).c:'',ti=eq.t&&s.o.includes(eq.t)?RW(eq.t).n:'';
+document.querySelectorAll('#au .av').forEach(a=>{a.style.boxShadow=fr?`0 0 0 3px ${fr},0 0 14px ${fr}`:''});
+const b=document.querySelector('#au b');if(b&&ti&&!document.querySelector('#au .ndtg')){const x=document.createElement('span');x.className='tag ndtg';x.textContent=ti;b.after(x)}
+if(!auto&&S.me&&td()&&!s.o.includes(td())&&ls.g('nd_shown')!=String(td())&&!ui.open&&!ui.auth){auto=1;ls.s('nd_shown',String(td()));hub=1;tab='c';draw()}}
+const R0=window.R;if(typeof R0=='function'){window.R=function(){const r=R0.apply(this,arguments);try{post()}catch(e){}return r}}
+const ap=document.getElementById('app');if(ap&&/Загрузка|Loading|Chargement/.test(ap.textContent))ap.innerHTML=Array(6).fill('<div class="sk"></div>').join('');
+document.getElementById('ndS').textContent=mute?'🔇':'🔊';
+/* --- PWA --- */
+if('serviceWorker'in navigator&&location.protocol=='https:')addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 })();
 </script>
 </body></html>
