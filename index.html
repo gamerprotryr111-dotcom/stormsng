@@ -108,6 +108,7 @@ button:active,.card.pc:active{transform:scale(.95)}
 .ndi{display:flex;flex-wrap:wrap;gap:6px}.ndb h4{margin:14px 0 8px;font-family:"Russo One",Onest,Arial}
 .ndq>div{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
 @media(prefers-reduced-motion:reduce){.sk,.ndg .now{animation:none}button{transition:none}}
+#ndS{display:none!important}
 </style>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0d14"><link rel="apple-touch-icon" href="icon-192.png">
 </head><body>
@@ -684,7 +685,7 @@ const ls={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v
 const J=(k,d)=>{try{return JSON.parse(ls.g(k))||d}catch(e){return d}},say=(m,ms)=>{if(typeof toast=='function')toast(m,ms)},vib=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
 /* --- звук (синтез, без файлов); по умолчанию выключен --- */
 let ac,mute=ls.g('nd_mute')!=='0';
-function tone(f,d,ty,v,at,sl){if(mute)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t0=ac.currentTime+(at||0);o.type=ty||'sine';o.frequency.setValueAtTime(f,t0);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t0+d);g.gain.setValueAtTime(v||.06,t0);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g);g.connect(ac.destination);o.start(t0);o.stop(t0+d+.02)}catch(e){}}
+function tone(f,d,ty,v,at,sl){return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t0=ac.currentTime+(at||0);o.type=ty||'sine';o.frequency.setValueAtTime(f,t0);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t0+d);g.gain.setValueAtTime(v||.06,t0);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g);g.connect(ac.destination);o.start(t0);o.stop(t0+d+.02)}catch(e){}}
 const SND={click:()=>tone(660,.06,'triangle',.04,0,440),whoosh:()=>tone(300,.18,'sawtooth',.025,0,900),pop:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.25,'triangle',.06,i*.08)),chime:()=>{tone(1319,.5,'sine',.05);tone(1760,.6,'sine',.04,.12)},boom:()=>tone(90,.5,'sawtooth',.06,0,30)};
 document.addEventListener('click',e=>{const a=e.target.closest('button,[data-a]');if(a)(a.dataset&&a.dataset.a=='tab')?SND.whoosh():SND.click()},true);
 /* --- конфетти и салют на одном канвасе --- */
@@ -692,7 +693,7 @@ const cc=document.createElement('canvas');cc.setAttribute('aria-hidden','true');
 const cx=cc.getContext('2d'),COL=['#ff4d5a','#ffd23f','#4ade80','#5ab8ff','#ff8ae2','#fff'];let cp=[],craf=0,cl=0;
 const fit=()=>{const d=Math.min(devicePixelRatio||1,2);cc.width=innerWidth*d;cc.height=innerHeight*d;cx.setTransform(d,0,0,d,0,0)};fit();addEventListener('resize',fit);
 const go=()=>{if(!craf){cl=performance.now();craf=requestAnimationFrame(cf)}};
-function confetti(n,x,y){if(RM)return;x=x==null?innerWidth/2:x;y=y==null?innerHeight*.35:y;for(let i=0;i<n;i++){const a=-Math.PI/2+(Math.random()-.5)*2.2,v=300+Math.random()*500;cp.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,w:5+Math.random()*6,h:3+Math.random()*4,r:Math.random()*6,vr:(Math.random()-.5)*14,c:COL[Math.random()*6|0],l:1})}go()}
+function confetti(n,x,y){return;x=x==null?innerWidth/2:x;y=y==null?innerHeight*.35:y;for(let i=0;i<n;i++){const a=-Math.PI/2+(Math.random()-.5)*2.2,v=300+Math.random()*500;cp.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,w:5+Math.random()*6,h:3+Math.random()*4,r:Math.random()*6,vr:(Math.random()-.5)*14,c:COL[Math.random()*6|0],l:1})}go()}
 function burst(x,y){const h=Math.random()*360,n=70;for(let i=0;i<n;i++){const a=i/n*6.283,v=120+Math.random()*180;cp.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,w:2.6,s:1,c:`hsl(${h+Math.random()*50},100%,65%)`,l:1})}go()}
 function cf(t){const dt=Math.min(.05,(t-cl)/1000||0);cl=t;cx.clearRect(0,0,innerWidth,innerHeight);
 for(const p of cp){if(p.s){p.vx*=1-1.2*dt;p.vy=p.vy*(1-1.2*dt)+90*dt;p.l-=dt*.7}else{p.vy+=620*dt;p.vx*=1-1.4*dt;p.vy*=1-.6*dt;p.r+=p.vr*dt;p.l-=dt*.38}
