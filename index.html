@@ -21,7 +21,7 @@ textarea{width:100%;min-height:120px}
 .row{display:flex;gap:0;margin-bottom:8px;background:var(--p);border:1px solid var(--bd);border-radius:14px;overflow:hidden;min-height:78px}
 .row.over{border-color:var(--v2)}
 .lab{width:74px;flex:none;display:grid;place-items:center;font:800 22px "Russo One",Arial;background:var(--p2);border-right:1px solid var(--bd)}
-.lab.t0{color:var(--g);background:linear-gradient(135deg,#5a2a0c,#0c0f18);text-shadow:0 0 14px var(--g)}.lab.t1{color:var(--v2)}.lab.tN{font-size:11px;text-align:center;color:var(--m)}
+.lab.t0{color:var(--g);background:linear-gradient(135deg,#5a2a0c,#0c0f18);text-shadow:0 0 14px var(--g)}.lab.t1{color:var(--v2)}.lab.tC{color:var(--m)}.lab.tN{font-size:11px;text-align:center;color:var(--m)}
 .row.r0{border-color:var(--g);box-shadow:0 0 28px #ff7a1a55}
 .pls{display:flex;flex-wrap:wrap;gap:8px;padding:8px;flex:1}
 .pl{display:flex;flex-direction:column;align-items:center;width:84px;cursor:pointer;font-size:12.5px;text-align:center}
@@ -119,7 +119,7 @@ button:active,.card.pc:active{transform:scale(.95)}
 const SB_URL='https://ajnzakhndrqgodxvdauj.supabase.co',SB_KEY='sb_publishable_nr5myEEKVkCCwBMbwzWr9w_gSVysYGu';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const T=['S+','S','A','B','N'];
+const T=['S','A','B','C','N'];
 const CH=['Наруто (Режим Бариона)','Саске (Сусано)','Хаширама','Тобирама','Мадара','Итачи','Какаши','Минато','Обито','Кагуя','Орочимару','Джирайя','Пейн','Гай','Рок Ли','Хината','Саратсугу','Кисаме'];
 let S={admin:false,all:[],players:[],matches:[],season:1,hof:[],br:null,rules:'',me:null,user:null};
 const ui={tab:'tier',adm:false,open:null,auth:null,aerr:'',ainfo:'',arch:false,h1:'',h2:'',sk:'elo',sd:-1,mp:''};
@@ -131,7 +131,7 @@ async function load(){
  const [p,m,a,ss]=await Promise.all([sb.from('profiles').select('*'),sb.from('matches').select('*'),sb.from('app_state').select('*'),sb.auth.getSession()]);
  if(my!=loadSeq||ui.pend)return;
  if(p.error||m.error){$('#app').innerHTML='<p class="no">Не удалось загрузить данные. Проверь, что schema.sql выполнен в Supabase. '+esc((p.error||m.error).message)+'</p>';return}
- S.all=p.data;S.players=S.all.filter(x=>x.listed);S.matches=m.data.map(x=>({...x,t:Date.parse(x.t)}));
+ S.all=p.data;S.all.forEach(x=>{if(x.tier=='S+')x.tier='S'});S.players=S.all.filter(x=>x.listed);S.matches=m.data.map(x=>({...x,t:Date.parse(x.t)}));
  const st={};(a.data||[]).forEach(r=>st[r.key]=r.val);S.season=st.season||1;S.hof=st.hof||[];S.br=st.bracket||null;S.rules=st.rules||'';
  const u=ss.data&&ss.data.session&&ss.data.session.user;S.user=u||null;S.me=u?S.all.find(x=>x.user_id==u.id)||null:null;
  S.admin=!!(S.me&&S.me.admin);if(u){const r=await sb.rpc('is_admin');if(r.data===true)S.admin=true}
@@ -151,7 +151,7 @@ function R(){const me=S.me,sv={};KEEP.forEach(k=>{const e=document.getElementByI
 $('#au').innerHTML=S.user?`${me?av(me):''}<b>${esc(me?me.nick:'Игрок')}</b>${me&&me.admin?'<span class="tag">админ</span>':''}<button class="b sm" data-a="out">Выйти</button>`:'<button class="b pri" data-a="auth">Войти / Регистрация</button>';
 $('#nv').innerHTML=TABS.map(t=>`<button data-a="tab" data-t="${t[0]}" class="${ui.tab==t[0]?'on':''}">${t[1]}</button>`).join('');
 $('#app').innerHTML=({tier:vTier,pl:vPl,m:vM,h2h:vH,br:vBr,rt:vRt,st:vS,info:vInfo})[ui.tab]()+(ui.open?modal():'')+(ui.auth?authModal():'');KEEP.forEach(k=>{const e=document.getElementById(k);if(e&&k in sv&&(e.tagName!='SELECT'||[...e.options].some(o=>o.value==sv[k])))e.value=sv[k]})}
-function vTier(){const adm=S.admin;return`${S.me&&!S.me.listed?'<p class="mu">Ты вошёл, но тебя ещё нет в тир-листе. Админ добавит тебя после проверки.</p>':''}<div class="bar">${adm?`<button data-a="adm" class="${ui.adm?'pri':''}">${ui.adm?'Режим админа включён':'Режим админа'}</button>`:''}${AD()?'<button data-a="auto">Расставить автоматически</button><span class="mu">Перетаскивай игроков между рядами и внутри ряда (на телефоне зажми иконку на секунду). Non playable остаётся как есть</span>':''}</div>`+T.map((t,i)=>`<div class="row r${i==0?0:''}" data-t="${t}"><div class="lab t${i<1?0:i<2?1:t=='N'?'N':''}">${t=='N'?'Non playable':t}</div><div class="pls">${S.players.filter(p=>p.tier==t).sort(srt).map(p=>`<div class="pl${AD()?' adm':''}" data-a="open" data-id="${p.id}">${av(p)}${esc(p.nick)}<span>${p.w}W / ${p.l}L</span></div>`).join('')}</div></div>`).join('')}
+function vTier(){const adm=S.admin;return`${S.me&&!S.me.listed?'<p class="mu">Ты вошёл, но тебя ещё нет в тир-листе. Админ добавит тебя после проверки.</p>':''}<div class="bar">${adm?`<button data-a="adm" class="${ui.adm?'pri':''}">${ui.adm?'Режим админа включён':'Режим админа'}</button>`:''}${AD()?'<button data-a="auto">Расставить автоматически</button><span class="mu">Перетаскивай игроков между рядами и внутри ряда (на телефоне зажми иконку на секунду). Non playable остаётся как есть</span>':''}</div>`+T.map((t,i)=>`<div class="row r${i==0?0:''}" data-t="${t}"><div class="lab t${t=='S'?0:t=='A'?1:t=='C'?'C':t=='N'?'N':''}">${t=='N'?'Non playable':t}</div><div class="pls">${S.players.filter(p=>p.tier==t).sort(srt).map(p=>`<div class="pl${AD()?' adm':''}" data-a="open" data-id="${p.id}">${av(p)}${esc(p.nick)}<span>${p.w}W / ${p.l}L</span></div>`).join('')}</div></div>`).join('')}
 function vPl(){const nw=AD()?S.all.filter(p=>!p.listed):[];return`${nw.length?`<h2>Новые игроки (не в тир-листе)</h2><div class="grid">${nw.map(p=>`<div class="card pc">${av(p)}<div><b>${esc(p.nick)}</b><small>${p.user_id?'Зарегистрирован':'Заготовка'}</small><div class="f"><button class="b pri" data-a="list" data-id="${p.id}">В тир-лист</button><button class="b" data-a="del" data-id="${p.id}">Удалить</button></div></div></div>`).join('')}</div><h2>Игроки</h2>`:''}${AD()?'<div class="f"><input id="np" placeholder="Ник заготовки (игрок ещё не вошёл)" maxlength="24"><button class="b pri" data-a="addp">Добавить заготовку</button></div>':''}<div class="grid">${S.players.map(p=>`<div class="card pc" data-a="open" data-id="${p.id}">${av(p)}<div><b>${esc(p.nick)}</b><small>Тир ${p.tier}</small><small>${p.w}W / ${p.l}L · ${wr(p)}</small>${p.user_id?'':'<small>Свободный профиль: нажми и забери</small>'}</div></div>`).join('')}</div>`}
 function vH(){
 const ps=[...S.all].sort((a,b)=>a.nick.localeCompare(b.nick)),op=v=>'<option value="">Выбери игрока</option>'+ps.map(p=>`<option value="${p.id}"${p.id==v?' selected':''}>${esc(p.nick)}</option>`).join('');
@@ -247,7 +247,7 @@ ui.open=null;if(!r.data.session)alert('Профиль закреплён за т
 if(d.a=='dc'){await sb.auth.signInWithOAuth({provider:'discord',options:{redirectTo:location.origin+location.pathname}});return}
 if(d.a=='out'){await sb.auth.signOut();return load()}
 const M=(act,x={})=>Q(sb.rpc('match_act',{p_mid:+id,p_act:act,...x}));
-if(d.a=='auto')await Promise.all(S.players.filter(p=>p.tier!='N').map(p=>{const t=p.elo>=1560?'S+':p.elo>=1460?'S':p.elo>=1360?'A':'B';return t==p.tier?0:sb.from('profiles').update({tier:t}).eq('id',p.id)}));
+if(d.a=='auto')await Promise.all(S.players.filter(p=>p.tier!='N').map(p=>{const t=p.elo>=1460?'S':p.elo>=1360?'A':p.elo>=1260?'B':'C';return t==p.tier?0:sb.from('profiles').update({tier:t}).eq('id',p.id)}));
 else if(d.a=='addp'){const n=V('np').trim();if(n)await Q(sb.from('profiles').insert({nick:n}))}
 else if(d.a=='sp'){const own=S.me&&S.me.id==id;const nn=V('pn').trim();if(nn.length<2||nn.length>24){alert('Ник должен быть от 2 до 24 символов');return}
 if(AD())await Q(sb.from('profiles').update({nick:nn,ch:V('pc').trim(),tier:V('pt')}).eq('id',id));else if(own){if(await Q(sb.rpc('set_nick',{p_nick:nn})))await Q(sb.rpc('set_chars',{p_ch:V('pc').trim()}))}ui.open=null}
@@ -725,7 +725,7 @@ const nw=new Date(),NY=new Date(nw.getFullYear()+(nw.getMonth()==11?1:0),0,1).ge
 const fireNY=()=>{if(ls.g('nd_ny')==String(NY))return;ls.s('nd_ny',String(NY));say('🎆 '+t('С Новым годом!','Happy New Year!'),6000);SND.chime();confetti(200);show(25)};
 const dl=NY-Date.now();if(dl>0&&dl<864e5)setTimeout(fireNY,dl);else if(dl<=0&&-dl<36e5)fireNY();
 /* --- победа / новый тир: конфетти, звук, вибрация --- */
-const TO={'S+':0,S:1,A:2,B:3,N:4};
+const TO={'S+':0,S:0,A:1,B:2,C:3,N:4};
 function check(){const me=S.me;if(!me||!S.matches.length)return;const k='nd_w'+me.id,seen=J(k,null),won=S.matches.filter(m=>m.s=='d'&&((m.a==me.id&&m.sa>m.sb)||(m.b==me.id&&m.sb>m.sa))).map(m=>m.id),sv=()=>ls.s(k,JSON.stringify({w:won,t:me.tier}));
 if(!seen){sv();return}const up=TO[me.tier]<TO[seen.t];
 if(won.some(i=>!seen.w.includes(i))||up){confetti(up?220:150);SND.pop();vib([30,40,30]);say(up?'⬆ '+t('Новый тир: ','New tier: ')+me.tier:'🏆 '+t('Победа!','Victory!'))}sv()}
